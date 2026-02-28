@@ -1,15 +1,13 @@
 "use client";
 
+import { UserButton } from "@/features/auth/components/user-button";
+
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useConvexAuth } from "convex/react";
-import { useAuthActions } from "@convex-dev/auth/react";
-
-import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const router = useRouter();
-  const { signOut } = useAuthActions();
   const { isAuthenticated, isLoading } = useConvexAuth();
 
   useEffect(() => {
@@ -23,11 +21,8 @@ export default function Home() {
   }
 
   return (
-    <>
-      <div>Logged in!</div>
       <div>
-        <Button onClick={() => signOut()}>Sign out</Button>
+        <UserButton />
       </div>
-    </>
   );
-}
+};
