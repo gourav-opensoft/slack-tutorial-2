@@ -9,8 +9,11 @@ import { useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 import { useConvexAuth } from "convex/react";
+import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
 
 export default function Home() {
+  const [open, setOpen ] = useCreateWorkspaceModal();
+
   const { data, isLoading: isLoadingWorkspaces } = useGetWorkspaces();
 
   const router = useRouter();
@@ -29,10 +32,10 @@ export default function Home() {
 
     if (workspaceId) {
       console.log("Redirect to workspace");
-    } else {
-      console.log("open creation modal");
+    } else if (!open){
+      setOpen(true);
     }
-  }, [workspaceId, isLoading]);
+  }, [workspaceId, isLoading, open, setOpen ]);
 
   if (isLoading || isLoadingWorkspaces) {
     return <div>Loading...</div>;
