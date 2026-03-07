@@ -6,7 +6,7 @@ import { api } from "../../../../convex/_generated/api";
 import { Doc, Id } from "../../../../convex/_generated/dataModel";
 
 type RequestType = { name: string};
-type ResponseType = Doc<"workspaces"> | null;
+type ResponseType = Id<"workspaces"> | null;
 
 type Options = {
     onSuccess?: ( data: ResponseType ) => void;
@@ -37,24 +37,24 @@ export const useCreateWorkspace = () => {
         try {
             setData(null);
             setError(null);
-            setIsError(false);
-            setIsSettled(false); 
-            setIsSuccess(false);
-
-            setIsPending(true);
+            setStatus("pending");
 
             const response = await mutation(values);
-            options?.onSuccess?.(data)
+            setStatus("success");
+            setData(response);
+
+            options?.onSuccess?.(response)
             return response;
         } catch (error){
+            setStatus("error");
+            setError(error as Error);
             options?.onError?.(error as Error);
-
+ 
             if (options?.throwError) {
                 throw error;
             }
         } finally {
-            setIsPending(false);
-            setIsSettled(true);
+            setStatus("settled");
             options?.onSettled?.();
         }
     }, [mutation]);
