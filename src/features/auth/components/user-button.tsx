@@ -19,7 +19,7 @@ export const UserButton = () => {
   if (isLoading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <Loader className="size-30 animate-spin text-muted-foreground" />
+        <Loader className="size-12 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -35,7 +35,7 @@ export const UserButton = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="outline-none relative">
-        <Avatar className="size-20 hover:opacity-75 transition">
+        <Avatar className="size-12 hover:opacity-75 transition">
           <AvatarImage alt={name} src={image} />
           <AvatarFallback className="bg-sky-500 text-white">
             {avatarFallback}
