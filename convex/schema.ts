@@ -8,7 +8,8 @@ const schema = defineSchema({
         name: v.string(),
         userId: v.id("users"),
         joinCode: v.string(),
-    }),
+    })
+    .index("by_user_id", ["userId"]),
 });
 
 export default schema;

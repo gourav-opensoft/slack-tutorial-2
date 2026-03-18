@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Loader, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -19,6 +20,11 @@ export const WorkSpaceSwitcher = () => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
   const [_open, setOpen] = useCreateWorkspaceModal();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { data: workspaces, isLoading: workspacesLoading } = useGetWorkspaces();
   const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({
@@ -28,6 +34,15 @@ export const WorkSpaceSwitcher = () => {
   const filteredWorkspaces = workspaces?.filter(
     (workspace) => workspace?._id !== workspaceId,
   );
+
+  if (!mounted) {
+    return (
+      <Button className="size-9 relative overflow-hidden bg-[#ABABAD] hover:bg-[#ABABAD]/80 text-slate-800 font-semibold text-xl">
+        <Loader className="size-5 animate-spin shrink-0" />
+      </Button>
+    );
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

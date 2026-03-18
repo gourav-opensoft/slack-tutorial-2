@@ -28,7 +28,16 @@ export const create = mutation({
 export const get = query({
     args: {},
     handler: async (ctx) => {
-        return await ctx.db.query("workspaces").collect();
+        const userId = await auth.getUserId(ctx);
+
+        if (!userId) {
+            return [];
+        }
+
+        return await ctx.db
+            .query("workspaces")
+            .withIndex("by_user_id", (q) => q.eq("userId", userId))
+            .collect();
     },
 });
 
@@ -37,8 +46,8 @@ export const getById = query({
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);
 
-        if(!userId) {
-            throw new Error("Unauthorized")
+        if (!userId) {
+            return null;
         }
 
         return await ctx.db.get(args.id);
