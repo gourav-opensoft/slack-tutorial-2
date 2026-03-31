@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useConvexAuth } from "convex/react";
 
 import { UserButton } from "@/features/auth/components/user-button";
 
@@ -16,15 +17,19 @@ export default function Home() {
 
   const workspaceId = useMemo(() => data?.[0]?._id, [data]);
 
-  useEffect(() => {
-    if (isLoadingWorkspaces) return;
+  const { isAuthenticated, isLoading: isLoadingAuth } = useConvexAuth();
 
-    if (workspaceId) {
+  useEffect(() => {
+    if (isLoadingAuth || isLoadingWorkspaces) return;
+
+    if (!isAuthenticated) {
+      router.replace("/login-page");
+    } else if (workspaceId) {
       router.replace(`/workspace/${workspaceId}`);
     } else if (!open) {
       setOpen(true);
     }
-  }, [workspaceId, isLoadingWorkspaces, open, setOpen, router]);
+  }, [workspaceId, isLoadingWorkspaces, open, setOpen, router, isAuthenticated, isLoadingAuth]);
 
   return (
     <div className="h-full">

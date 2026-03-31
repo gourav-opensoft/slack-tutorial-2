@@ -5,7 +5,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-
+import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -29,8 +29,12 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
     }
   }, [currentUser, isLoading, router]);
 
-  if (isLoading) {
-    return null; // Or a loader
+  if (isLoading || !currentUser) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Loader className="size-5 animate-spin text-muted-foreground" />
+      </div>
+    );
   }
 
   return (
@@ -40,7 +44,7 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
         <Sidebar />
         <ResizablePanelGroup
           direction="horizontal"
-          autoSaveId="ca-workspace-layout"
+          autosaveid="ga-workspace-layout"
         >
           <ResizablePanel
             defaultSize={20}
@@ -50,7 +54,9 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
             <WorkspaceSidebar />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel minSize={20}>{children}</ResizablePanel>
+          <ResizablePanel minSize={20}>
+            {children}
+          </ResizablePanel>
         </ResizablePanelGroup>
       </div>
     </div>

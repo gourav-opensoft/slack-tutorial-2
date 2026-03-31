@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useConvexAuth } from "convex/react";
 
 import {
   Dialog,
@@ -18,8 +19,13 @@ export const CreateWorkspaceModal = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [open, setOpen] = useCreateWorkspaceModal();
+  const { isAuthenticated, isLoading: isLoadingAuth } = useConvexAuth();
 
   const { mutate, isPending } = useCreateWorkspace();
+
+  if (!isAuthenticated && !isLoadingAuth) {
+    return null;
+  }
 
   const handleClose = () => {
     setOpen(false);
