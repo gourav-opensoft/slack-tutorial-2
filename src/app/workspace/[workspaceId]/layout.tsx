@@ -4,6 +4,7 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
+  useDefaultLayout,
 } from "@/components/ui/resizable";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -22,6 +23,10 @@ interface WorkspaceIdLayoutProps {
 const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
   const router = useRouter();
   const { data: currentUser, isLoading } = useCurrentUser();
+
+  const { defaultLayout, onLayoutChanged } = useDefaultLayout({
+    id: "ga-workspace-layout",
+  });
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
@@ -43,10 +48,12 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
       <div className="flex h-[calc(100vh-40px)]">
         <Sidebar />
         <ResizablePanelGroup
-          direction="horizontal"
-          autosaveid="ga-workspace-layout"
+          orientation="horizontal"
+          defaultLayout={defaultLayout}
+          onLayoutChanged={onLayoutChanged}
         >
           <ResizablePanel
+            id="workspace-sidebar"
             defaultSize={20}
             minSize={11}
             className="bg-[#5E2C5F]"
@@ -54,7 +61,7 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
             <WorkspaceSidebar />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel minSize={20}>
+          <ResizablePanel id="workspace-content" minSize={20}>
             {children}
           </ResizablePanel>
         </ResizablePanelGroup>
