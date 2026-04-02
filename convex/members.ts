@@ -1,11 +1,12 @@
 import { v } from "convex/values";
 
+import { auth } from "./auth";
 import { query } from "./_generated/server";
 
 export const current = query({
     args: { workspaceId: v.id("workspaces") },
     handler: async (ctx, args) => {
-        const userId = await auth.getuserId(ctx);
+        const userId = await auth.getUserId(ctx);
 
         if (!userId) {
             return null;
@@ -16,7 +17,7 @@ export const current = query({
         .withIndex("by_workspace_id_user_id", (q) => 
             q.eq("workspaceId", args.workspaceId).eq("userId", userId )
         )
-        .collect();
+        .unique();
 
         if (!member) {
             return null;
