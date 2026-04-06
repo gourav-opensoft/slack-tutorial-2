@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TrashIcon } from "lucide-react";
 
 import {
     Dialog,
@@ -9,6 +10,7 @@ import {
     DialogClose,
     DialogFooter,
 } from "@/components/ui/dialog";
+import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
 
 interface PreferencesModalProps {
     open: boolean;
@@ -22,6 +24,9 @@ export const PreferenceModal =({
     initialValue,
 }: PreferencesModalProps) => {
     const [value, setvalue] = useState(initialValue);
+
+    const { mutate : updateWorkspace, isPending: isUpdatingWorkspace } = useUpdateWorkspace();
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="p-0 bg-gray-50 overflow-hidden">
@@ -44,6 +49,15 @@ export const PreferenceModal =({
                             {value}
                         </p>
                     </div>
+                    <button
+                      disabled={false}
+                      onClick={() => {}}
+                      className="flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50 text-rose-600"
+                    >
+                        <TrashIcon className="size-4" />
+                        <p className="text-sm font-semibold">Delete workspace</p>
+
+                    </button>
                 </div>
             </DialogContent>
         </Dialog>
