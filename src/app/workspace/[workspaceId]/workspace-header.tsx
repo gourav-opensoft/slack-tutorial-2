@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { PreferenceModal } from "./preferences-modal";
+import { PreferencesModal } from "./preferences-modal";
 import { Doc } from "../../../../convex/_generated/dataModel";
 
 interface WorkspaceHeaderProps {
@@ -24,7 +24,7 @@ export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) =>
 
   return (
     <>
-      <PreferenceModal
+      <PreferencesModal
         open={preferencesOpen}
         setOpen={setPreferencesOpen}
         initialValue={workspace.name}
