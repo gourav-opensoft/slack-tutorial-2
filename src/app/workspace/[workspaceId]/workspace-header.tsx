@@ -11,19 +11,27 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { InviteModal } from "./invite-modal";
 import { PreferencesModal } from "./preferences-modal";
 import { Doc } from "../../../../convex/_generated/dataModel";
 
-interface WorkspaceHeaderProps {
+  interface WorkspaceHeaderProps {
   workspace: Doc<"workspaces">;
   isAdmin: boolean;
 }
 
 export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) => {
+  const [inviteOpen, setInviteOpen] = useState(false);
   const [preferencesOpen, setPreferencesOpen] = useState(false);
 
   return (
     <>
+    <InviteModal
+      open={inviteOpen}
+      setOpen={setInviteOpen}
+      name={workspace.name}
+      joinCode={workspace.joinCode}
+      />
       <PreferencesModal
         open={preferencesOpen}
         setOpen={setPreferencesOpen}
@@ -54,20 +62,19 @@ export const WorkspaceHeader = ({ workspace, isAdmin }: WorkspaceHeaderProps) =>
           {isAdmin && (
             <>
             <DropdownMenuSeparator />
-          <DropdownMenuItem 
-            className="cursor-pointer py-2"
-            onClick={() => {}} 
-          > 
-            Invite people to {workspace.name}
-          </DropdownMenuItem>
-
-          <DropdownMenuSeparator />
-          <DropdownMenuItem 
-            className="cursor-pointer py-2"
-            onClick={() => setPreferencesOpen(true)} 
-          >
-            Preferences
-          </DropdownMenuItem>
+            <DropdownMenuItem
+                className="cursor-pointer py-2"
+                onClick={() => setInviteOpen(true)} 
+            >
+              Invite people to {workspace.name}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              className="cursor-pointer py-2"
+              onClick={() => setPreferencesOpen(true)} 
+            >
+              Preferences
+            </DropdownMenuItem>
             </>
           )}
           
