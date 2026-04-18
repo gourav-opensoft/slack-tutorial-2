@@ -6,15 +6,17 @@ import Image from "next/image";
 import VerificationInput from 'react-verification-input';
 
 import { Button } from "@/components/ui/button";
+import { Loader } from "lucide-react";
 import { useWorkspaceId } from '@/hooks/use-workspace-id';
-import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
+import { useGetWorkspace } from '@/features/workspaces/api/use-get-workspace';
 
-const JoinPage=() => {
+const JoinPage = () => {
   const workspaceId = useWorkspaceId();
+  
+  const {}: useGetWorkspace
 
-  const {} = useGetWorkspace
-}
   return (
+
     <div className=" h-full flex flex-col gap-y-8 items-center justify-center bg-white p-8 rounded-lg shadow-md">
       <Image src="/logo.svg" width={100} height={60} alt="Logo" />
       <div className="flex flex-col gap-y-4 items-center justify-center max-w-md">

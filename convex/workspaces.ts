@@ -150,6 +150,13 @@ export const get = query({
     },
 });
 
+export const getInfoById = query({
+    args: { id: v.id("workspaces") },
+    handler: async (ctx, args) => {
+        
+    },
+});
+
 export const getById = query({
     args: { id: v.id("workspaces") },
     handler: async (ctx, args) => {
