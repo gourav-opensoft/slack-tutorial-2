@@ -6,6 +6,8 @@ import { useGetChannel } from "@/features/channels/api/use-get-channel";
 
 import { useChannelId } from "@/hooks/use-channel-id";
 
+import { Header } from "./header";
+
 const ChannelIdPage = () => {
   const channelId = useChannelId(); 
 
@@ -31,8 +33,8 @@ const ChannelIdPage = () => {
   }
 
   return (
-    <div>
-      Channel Id Page
+    <div className="flex flex-col h-full">
+      <Header title={channel.name} />
     </div>
   );
 };
