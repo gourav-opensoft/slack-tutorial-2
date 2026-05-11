@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 
-import { Modals } from "@/components/Modals";
+import { Modals } from "@/components/modals";
 import { Toaster } from "@/components/ui/sonner";
 import { JotaiProvider } from "@/components/jotai-provider";
-import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 
 import "./globals.css";
 
