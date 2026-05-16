@@ -12,6 +12,7 @@ import { useConfirm } from '@/hooks/use-confirm';
 import { Hint } from './hint';
 import { Toolbar } from './toolbar';
 import { Thumbnail } from './thumbnail';
+import { Reactions } from './reactions';
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
 import { Doc, Id } from "../../convex/_generated/dataModel";
@@ -150,7 +151,7 @@ export const Message = ({
                                         (edited)
                                     </span>
                                 ) : null}
-                                {JSON.stringify(reactions)}
+                                <Reactions data={reactions} onChange={handleReaction} />
                             </div>
                         )}
                     </div>
@@ -218,7 +219,7 @@ export const Message = ({
                                 {updatedAt ? (
                                     <span className="text-xs text-muted-foreground">(edited)</span>
                                 ) : null}
-                                {JSON.stringify(reactions)}
+                                <Reactions data={reactions} onChange={handleReaction} />
                             </div>
                         )}
                     </div>
