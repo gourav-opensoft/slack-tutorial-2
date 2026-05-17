@@ -6,6 +6,8 @@ import {
   ResizablePanelGroup,
   useDefaultLayout,
 } from "@/components/ui/resizable";
+import { usePanel } from "@/hooks/use-panel";
+
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -21,6 +23,10 @@ interface WorkspaceIdLayoutProps {
 }
 
 const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
+  const { parentMessageId, onClose } = usePanel();
+
+  const showPanel = !!parentMessageId; 
+
   const router = useRouter();
   const { data: currentUser, isLoading } = useCurrentUser();
 
@@ -64,6 +70,14 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
           <ResizablePanel minSize={20}>
             {children}
           </ResizablePanel>
+          {showPanel && (
+            <>
+              <ResizableHandle withHandle />
+              <ResizablePanel minSize={20} defaultSize={29}>
+                Load thread                
+              </ResizablePanel>
+            </>
+          )}
         </ResizablePanelGroup>
       </div>
     </div>
