@@ -12,4 +12,4 @@ export const useGetMember = ({ id }: UseGetMemberProps) => {
     const isLoading = data === undefined;
 
     return { data,isLoading };
-}; 
+};
