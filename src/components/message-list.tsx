@@ -53,7 +53,7 @@ export const MessageList = ({
         (groups, message) => {
             const date = new Date(message._creationTime);
             const dateKey = format(date, "yyyy-MM-dd");
-            if(!groups[dateKey]) {
+            if (!groups[dateKey]) {
                 groups[dateKey] = [];
             }
             groups[dateKey].unshift(message);
@@ -64,7 +64,7 @@ export const MessageList = ({
 
     return (
         <div className="flex-1 flex flex-col-reverse pb-4 overflow-y-auto messages-scrollbar">
-            {Object.entries(groupedMessages || {}).map(([dateKey, messages]) =>(
+            {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
                 <div key={dateKey}>
                     <div className="text-center my-2 relative">
                         <hr className="absolute top-1/2 left-0 right-0 border-t border-gray-300" />
@@ -73,8 +73,8 @@ export const MessageList = ({
                         </span>
                     </div>
                     {messages.map((message, index) => {
-                        const prevMessage = messages[index -1];
-                        const isCompact = 
+                        const prevMessage = messages[index - 1];
+                        const isCompact =
                             prevMessage &&
                             prevMessage.user?._id === message.user?._id &&
                             differenceInMinutes(
@@ -108,22 +108,22 @@ export const MessageList = ({
                 </div>
             ))}
             <div
-              className="h-1"
-              ref={(el) => {
-                if (el) {
-                    const observer = new IntersectionObserver(
-                        ([entry]) => {
-                            if (entry.isIntersecting && canLoadMore) {
-                                loadMore();
-                            }
-                        },
-                        { threshold: 1.0 }
-                    );
+                className="h-1"
+                ref={(el) => {
+                    if (el) {
+                        const observer = new IntersectionObserver(
+                            ([entry]) => {
+                                if (entry.isIntersecting && canLoadMore) {
+                                    loadMore();
+                                }
+                            },
+                            { threshold: 1.0 }
+                        );
 
-                    observer.observe(el);
-                    return () => observer.disconnect();
-                }
-              }}
+                        observer.observe(el);
+                        return () => observer.disconnect();
+                    }
+                }}
             />
             {isLoadingMore && (
                 <div className="text-center my-2 relative">
